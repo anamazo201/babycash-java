@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "🔍 Ejecutando pre-commit hook..."
+
+# Validar si hay archivos .js con errores de sintaxis
+for file in $(git diff --cached --name-only | grep '\.js$'); do
+  if ! node -c "$file"; then
+    echo "❌ Error de sintaxis en $file"
+    exit 1
+  fi
+done
+
+echo "✅ Validación exitosa. Puedes hacer commit."
+exit 0
